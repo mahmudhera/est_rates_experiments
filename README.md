@@ -4,7 +4,10 @@ This repository contains the experiments verifying our estimator for the mutatio
 # Installation
 Run the following in the repo's home. Installation requires g++ and conda.
 ```
-bash install.sh
+g++ src/mutate_genome.cpp -std=c++17 -O3 -o mutate_genome
+export PATH=`pwd`:$PATH
+conda create -n est_rates --file requirements.txt -c conda-forge -c bioconda -y
+conda activate est_rates
 ```
 
 
