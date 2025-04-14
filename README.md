@@ -1,1 +1,15 @@
-# est_rates_experiments
+# Summary
+This repository contains the experiments verifying our estimator for the mutation rates works well. The verifications are through simulations.
+
+# Installation
+Run the following in the repo's home. Installation requires g++ and conda.
+```
+bash install.sh
+```
+
+
+# Running everything
+Run the following in the repo's home. Installation is required.
+```
+bash run_everything.sh
+```
