@@ -413,19 +413,19 @@ def main():
                         print(f"Progress: {progress:.2f}%")
                         
                         # create output filename
-                        output_filename = f"{os.path.splitext(os.path.basename(genome_filename1))[0]}_mut_{ps}_{pd}_{d}_{seed}_{ksize}.fasta"
-                        output_path = os.path.join(dir_name, output_filename)
+                        mutated_filename = f"{os.path.splitext(os.path.basename(genome_filename1))[0]}_mut_{ps}_{pd}_{d}_{seed}_{ksize}.fasta"
+                        mutated_path = os.path.join(dir_name, mutated_filename)
                         
                         # check if the file exists
-                        if not os.path.exists(output_path):
-                            print(f"Error: {output_path} does not exist.")
+                        if not os.path.exists(mutated_path):
+                            print(f"Error: {mutated_path} does not exist.")
                             continue
                             
                         # compute rates
-                        subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly = compute_mutation_rates(genome_filename1, output_path, ksize, num_threads)
+                        subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly = compute_mutation_rates(genome_filename1, mutated_path, ksize, num_threads)
                         
                         # compute subst rate using SMM
-                        subst_rate_smm = compute_subst_rate_smm(genome_filename1, output_path, ksize)
+                        subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
                         
                         # write to file
                         # header
