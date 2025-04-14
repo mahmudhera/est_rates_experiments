@@ -437,3 +437,6 @@ def main():
                             
     print(f"Successfully completed!")
     
+    
+if __name__ == "__main__":
+    main()
