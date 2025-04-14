@@ -402,6 +402,10 @@ def main():
     total = len(ps_rates) * len(pd_rates) * len(d_rates) * len(seeds) * len(ksizes)
     print(f"Total combinations: {total}")
     
+    # header in the output file
+    with open(output_filename, "w") as f:
+        f.write("ps\tpd\td\tseed\tksize\tsubst_rate_lin\tdel_rate_lin\tins_rate_lin\tsubst_rate_poly\tdel_rate_poly\tins_rate_poly\tsubst_rate_smm\n")
+    
     for ps in ps_rates:
         for pd in pd_rates:
             for d in d_rates:
@@ -427,11 +431,7 @@ def main():
                         # compute subst rate using SMM
                         subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
                         
-                        # write to file
-                        # header
-                        with open(output_filename, "w") as f:
-                            f.write("ps\tpd\td\tseed\tksize\tsubst_rate_lin\tdel_rate_lin\tins_rate_lin\tsubst_rate_poly\tdel_rate_poly\tins_rate_poly\tsubst_rate_smm\n")
-                            
+                        # write to file    
                         with open(output_filename, "a") as f:
                             f.write(f"{ps}\t{pd}\t{d}\t{seed}\t{ksize}\t{subst_rate_lin}\t{del_rate_lin}\t{ins_rate_lin}\t{subst_rate_poly}\t{del_rate_poly}\t{ins_rate_poly}\t{subst_rate_smm}\n")
                             
