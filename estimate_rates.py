@@ -317,11 +317,11 @@ def compute_mutation_rates(genome_filename1, genome_filename2, k, num_threads = 
     S, D, I, N = compute_S_D_I_N_all(unitig_set_orig, unitig_set_mutd, k, num_threads)
     
     # DEBUG: print L, L2, S, D, I, N, fA, fA_mut, k
-    print(f"DBG: L: {L}, L2: {L2}, S: {S}, D: {D}, I: {I}, N: {N}, fA: {fA}, fA_mut: {fA_mut}, k: {k}")
+    #print(f"DBG: L: {L}, L2: {L2}, S: {S}, D: {D}, I: {I}, N: {N}, fA: {fA}, fA_mut: {fA_mut}, k: {k}")
     # DEBUG: show fA, fC, fG, fT
-    print(f"DBG: fA: {fA}, fC: {fC}, fG: {fG}, fT: {fT}")
+    #print(f"DBG: fA: {fA}, fC: {fC}, fG: {fG}, fT: {fT}")
     # DEBUG: show fA_mut, fC_mut, fG_mut, fT_mut
-    print(f"DBG: fA_mut: {fA_mut}, fC_mut: {fC_mut}, fG_mut: {fG_mut}, fT_mut: {fT_mut}")
+    #print(f"DBG: fA_mut: {fA_mut}, fC_mut: {fC_mut}, fG_mut: {fG_mut}, fT_mut: {fT_mut}")
     
     # compute the rates
     subst_rate_lin, del_rate_lin, ins_rate_lin = estimate_rates_linear(L, L2, N, D, S, fA, fA_mut, k)
@@ -343,8 +343,8 @@ def compute_subst_rate_smm(genome_filename1, genome_filename2, k):
     kmers_mutated_set = set(kmers_mutated)
     
     num_intersection = len(kmers_orig_set.intersection(kmers_mutated_set))
-    containment1 = len(num_intersection) / len(kmers_orig_set)
-    containment2 = len(num_intersection) / len(kmers_mutated_set)
+    containment1 = num_intersection / len(kmers_orig_set)
+    containment2 = num_intersection / len(kmers_mutated_set)
     max_containment = max(containment1, containment2)
     ani = max_containment ** (1.0/k)
     
@@ -410,7 +410,7 @@ def main():
                         # show progress
                         num_completed += 1
                         progress = (num_completed / total) * 100
-                        print(f"Progress: {progress:.2f}%\r", end="")
+                        print(f"Progress: {progress:.2f}%")
                         
                         # create output filename
                         output_filename = f"{os.path.splitext(os.path.basename(genome_filename1))[0]}_mut_{ps}_{pd}_{d}_{seed}_{ksize}.fasta"
