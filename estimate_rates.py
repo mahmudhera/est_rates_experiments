@@ -436,8 +436,8 @@ def main():
                         subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly = compute_mutation_rates(genome_filename1, mutated_path, ksize, num_threads)
                         
                         # compute subst rate using SMM
-                        #subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
-                        subst_rate_smm = -1
+                        subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
+                        #subst_rate_smm = -1
                         
                         # write to file    
                         with open(output_filename, "a") as f:
