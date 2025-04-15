@@ -18,9 +18,9 @@ def run_cuttlefish(genome_filename, k, num_threads, outoput_prefix):
     #rm random_mutated.fasta_unitigs*
     #cuttlefish build -s random_mutated.fasta -k 21 -t 128 -o random_mutated.fasta_unitigs -w . --ref
     
-    cmd = f"rm {outoput_prefix}*"
+    #cmd = f"rm {outoput_prefix}*"
     # run the command
-    subprocess.run(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+    #subprocess.run(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
     
     # run cuttlefish
     cmd = f"cuttlefish build -s {genome_filename} -k {k} -t {num_threads} -o {outoput_prefix} -w . --ref"
@@ -436,8 +436,8 @@ def main():
                         subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly = compute_mutation_rates(genome_filename1, mutated_path, ksize, num_threads)
                         
                         # compute subst rate using SMM
-                        subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
-                        #subst_rate_smm = -1
+                        #subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
+                        subst_rate_smm = -1
                         
                         # write to file    
                         with open(output_filename, "a") as f:
