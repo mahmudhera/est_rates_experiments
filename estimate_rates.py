@@ -411,7 +411,7 @@ def main():
                 c3 = pd in [0.01, 0.05] and pd in [0.01, 0.05]
                 
                 if not(c1 or c2 or c3):
-                    num_completed += len(seed) * len(ksizes)
+                    num_completed += len(seeds) * len(ksizes)
                     progress = (num_completed / total) * 100
                     print(f"Progress: {progress:.2f}%")
                     continue
