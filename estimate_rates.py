@@ -396,7 +396,7 @@ def main():
     pd_rates = list(rates)
     d_rates = list(rates)
     seeds = list(range(10))
-    ksizes = [21, 31, 41, 51]
+    ksizes = [21, 31, 41]
     
     num_completed = 0
     total = len(ps_rates) * len(pd_rates) * len(d_rates) * len(seeds) * len(ksizes)
@@ -409,6 +409,13 @@ def main():
     for ps in ps_rates:
         for pd in pd_rates:
             for d in d_rates:
+                c1 = ps in [0.01, 0.05] and pd in [0.01, 0.05]
+                c2 = ps in [0.01, 0.05] and d in [0.01, 0.05]
+                c3 = pd in [0.01, 0.05] and pd in [0.01, 0.05]
+                
+                if not(c1 or c2 or c3):
+                    continue
+                
                 for seed in seeds:
                     for ksize in ksizes:
                         # show progress
@@ -429,7 +436,8 @@ def main():
                         subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly = compute_mutation_rates(genome_filename1, mutated_path, ksize, num_threads)
                         
                         # compute subst rate using SMM
-                        subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
+                        #subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
+                        subst_rate_smm = -1
                         
                         # write to file    
                         with open(output_filename, "a") as f:
