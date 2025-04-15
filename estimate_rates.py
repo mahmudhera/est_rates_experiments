@@ -24,6 +24,7 @@ def run_cuttlefish(genome_filename, k, num_threads, outoput_prefix):
     
     # run cuttlefish
     cmd = f"cuttlefish build -s {genome_filename} -k {k} -t {num_threads} -o {outoput_prefix} -w . --ref"
+    print(cmd)
     
     with open(os.devnull, 'wb') as devnull:
         subprocess.check_call(cmd.split(' '), stdout=devnull, stderr=subprocess.STDOUT)
