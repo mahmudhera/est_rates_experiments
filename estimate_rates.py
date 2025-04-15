@@ -19,7 +19,9 @@ def run_cuttlefish(genome_filename, k, num_threads, outoput_prefix):
     #cuttlefish build -s random_mutated.fasta -k 21 -t 128 -o random_mutated.fasta_unitigs -w . --ref
     
     cmd = f"rm {outoput_prefix}*"
-    os.system(cmd)
+    # invoke the command without showing error
+    with open(os.devnull, 'wb') as devnull:
+        subprocess.check_call(cmd.split(' '), stdout=devnull, stderr=subprocess.STDOUT)
 
     cmd = f"cuttlefish build -s {genome_filename} -k {k} -t {num_threads} -o {outoput_prefix} -w . --ref"
     
@@ -286,21 +288,15 @@ def compute_mutation_rates(genome_filename1, genome_filename2, k, num_threads = 
     L2 = len(mutated_string)
     
     fA = orig_string.count('A')
-    fC = orig_string.count('C')
-    fG = orig_string.count('G')
-    fT = orig_string.count('T')
     fA_mut = mutated_string.count('A')
-    fC_mut = mutated_string.count('C')
-    fG_mut = mutated_string.count('G')
-    fT_mut = mutated_string.count('T')
     
     genome1_cuttlefish_prefix = genome_filename1+"_unitigs"
     genome1_unitigs_filename = genome1_cuttlefish_prefix + ".fa"
     genome2_cuttlefish_prefix = genome_filename2+"_unitigs"
     genome2_unitigs_filename = genome2_cuttlefish_prefix + ".fa"
     
-    run_cuttlefish(genome_filename1, k, 64, genome1_cuttlefish_prefix)
-    run_cuttlefish(genome_filename2, k, 64, genome2_cuttlefish_prefix)
+    run_cuttlefish(genome_filename1, k, num_threads, genome1_cuttlefish_prefix)
+    run_cuttlefish(genome_filename2, k, num_threads, genome2_cuttlefish_prefix)
     
     assert os.path.exists(genome1_unitigs_filename), f"Mutated unitigs file {genome1_unitigs_filename} not found"
     assert os.path.exists(genome2_unitigs_filename), f"Original unitigs file {genome2_unitigs_filename} not found"
