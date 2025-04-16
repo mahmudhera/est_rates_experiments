@@ -291,7 +291,7 @@ def compute_mutation_rates(genome_filename1, genome_filename2, k, num_threads = 
     fA = orig_string.count('A')
     fA_mut = mutated_string.count('A')
     
-    genome1_cuttlefish_prefix = genome_filename1+"_unitigs"
+    genome1_cuttlefish_prefix = genome_filename1+f"_{k}_"+"_unitigs"
     genome1_unitigs_filename = genome1_cuttlefish_prefix + ".fa"
     genome2_cuttlefish_prefix = genome_filename2+"_unitigs"
     genome2_unitigs_filename = genome2_cuttlefish_prefix + ".fa"
