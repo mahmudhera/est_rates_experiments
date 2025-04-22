@@ -392,7 +392,7 @@ def main():
     ps_rates = list(rates)
     pd_rates = list(rates)
     d_rates = list(rates)
-    seeds = list(range(10))
+    seeds = list(range(5))
     ksizes = [21, 31, 41]
     
     num_completed = 0
