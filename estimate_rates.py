@@ -281,6 +281,37 @@ def split_unitigs(unitigs, k):
     return return_list
 
 
+def compute_mutation_rates_by_true_values(genome_filename1, genome_filename2, k):
+    orig_string = read_genome(genome_filename1)
+    mutated_string = read_genome(genome_filename2)
+    
+    L = len(orig_string)
+    L2 = len(mutated_string)
+    
+    fA = orig_string.count('A')
+    fA_mut = mutated_string.count('A')
+    
+    # read the mutated file's first line
+    S, I, D, N = None, None, None, None
+    with open(genome_filename2) as f:
+        first_line = f.readline().strip()
+        # the line looks like: "> mutated_13110_11715_12488_60632"
+        # parse the numbers
+        numbers = first_line.split('_')[1:]
+        S, I, D, N = [int(x) for x in numbers]
+        
+    # if S, I, D, N are None, return None
+    if S is None or I is None or D is None or N is None:
+        print(f"Error: S, I, D, N are None")
+        return None, None, None, None, None, None
+    
+    # compute the rates
+    subst_rate_lin, del_rate_lin, ins_rate_lin = estimate_rates_linear(L, L2, N, D, S, fA, fA_mut, k)
+    subst_rate_poly, del_rate_poly, ins_rate_poly = estimate_rates_polynomial(L, L2, S, D, I, N, k)
+    
+    return subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly
+
+
 def compute_mutation_rates(genome_filename1, genome_filename2, k, num_threads = 255):
     orig_string = read_genome(genome_filename1)
     mutated_string = read_genome(genome_filename2)
@@ -356,6 +387,8 @@ def main():
     parser.add_argument("dir_name", type=str, help="Directory where all mutated genomes are.")
     parser.add_argument("num_threads", type=int, help="Number of threads to use.", default=32)
     parser.add_argument("output_filename", type=str, help="Output filename.")
+    # add a boolean flag to check if we want to use the true values
+    parser.add_argument("--use_true_values", action="store_true", help="Use true values for the rates.")
     args = parser.parse_args()
     
     genome_filename1 = args.genome_filename1
@@ -433,7 +466,11 @@ def main():
                             continue
                             
                         # compute rates
-                        subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly = compute_mutation_rates(genome_filename1, mutated_path, ksize, num_threads)
+                        if args.use_true_values:
+                            # compute subst rate using true values
+                            subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly = compute_mutation_rates_by_true_values(genome_filename1, mutated_path, ksize)
+                        else:
+                            subst_rate_lin, del_rate_lin, ins_rate_lin, subst_rate_poly, del_rate_poly, ins_rate_poly = compute_mutation_rates(genome_filename1, mutated_path, ksize, num_threads)
                         
                         # compute subst rate using SMM
                         subst_rate_smm = compute_subst_rate_smm(genome_filename1, mutated_path, ksize)
