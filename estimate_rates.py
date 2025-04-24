@@ -298,7 +298,7 @@ def compute_mutation_rates_by_true_values(genome_filename1, genome_filename2, k)
         # the line looks like: "> mutated_13110_11715_12488_60632"
         # parse the numbers
         numbers = first_line.split('_')[1:]
-        S, I, D, N = [int(x) for x in numbers]
+        S, D, I, N = [int(x) for x in numbers]
         
     # if S, I, D, N are None, return None
     if S is None or I is None or D is None or N is None:
