@@ -117,6 +117,7 @@ def parse_args():
     parser.add_argument("--num_simulations", type=int, default=10, help="Number of simulations for each setting.")
     parser.add_argument("--output_file", type=str, default="results_by_varying_fA", help="Where to save the results.")
     parser.add_argument("--working_dir", type=str, default="data/", help="Working directory.")
+    parser.add_argument("--rate", type=float, default=0.01, help="Mutation rate, ps, pd, d will all be set to this.")
     
     return parser.parse_args()
 
@@ -141,7 +142,7 @@ def create_mutated_genome(input_filename, output_filename, ps, pd, d, ksize, see
     
 def run_simulations_est_scores_and_record(args):
     ksizes = [21, 31, 41]
-    ps, pd, d = 0.01, 0.01, 0.01
+    ps, pd, d = args.rate, args.rate, args.rate
     
     for fA in [round(fA, 2) for fA in list(np.arange(args.fA_min, args.fA_max + args.fA_step, args.fA_step))]:
         for i in range(args.num_simulations):
@@ -186,4 +187,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    # Example usage: python run_for_varying_fAs.py --L 1000000 --fA_min 0.15 --fA_max 0.35 --fA_step 0.01 --num_simulations 10 --output_file results_by_varying_fA.csv
