@@ -174,12 +174,11 @@ def main():
         os.makedirs(args.working_dir)
         
     # Create the output file
-    output_file = os.path.join(args.working_dir, args.output_file)
-    if os.path.exists(output_file):
-        os.remove(output_file)
-    with open(output_file, "w") as f:
+    if os.path.exists(args.output_file):
+        os.remove(args.output_file)
+    with open(args.output_file, "w") as f:
         f.write("fA\tsimulation\tsubst_rate\tdel_rate\tins_rate\n")
-    print(f"Output file created: {output_file}")
+    print(f"Output file created: {args.output_file}")
     
     # Run the simulations
     run_simulations_est_scores_and_record(args)
