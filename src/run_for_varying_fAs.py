@@ -146,12 +146,12 @@ def run_simulations_est_scores_and_record(args):
     for fA in [round(fA, 2) for fA in list(np.arange(args.fA_min, args.fA_max + args.fA_step, args.fA_step))]:
         for i in range(args.num_simulations):
             # Create random genome
-            random_genome_filename = os.path.join(args.working_dir, f"random_genome_fA_{fA}_sim_{i}.txt")
+            random_genome_filename = os.path.join(args.working_dir, f"random_genome_fA_{fA}_sim_{i}.fasta")
             seed = i
             create_random_genome(fA, args.L, random_genome_filename, seed)
             
             # Create mutated genome
-            mutated_genome_filename = os.path.join(args.working_dir, f"mutated_genome_fA_{fA}_sim_{i}.txt")
+            mutated_genome_filename = os.path.join(args.working_dir, f"mutated_genome_fA_{fA}_sim_{i}.fasta")
             create_mutated_genome(random_genome_filename, mutated_genome_filename, ps, pd, d, ksizes[0], seed)
             
             # Compute mutation rates
@@ -180,10 +180,11 @@ def main():
     with open(output_file, "w") as f:
         f.write("fA\tsimulation\tsubst_rate\tdel_rate\tins_rate\n")
     print(f"Output file created: {output_file}")
+    
     # Run the simulations
     run_simulations_est_scores_and_record(args)
     return
 
 if __name__ == "__main__":
     main()
-    # Example usage: python run_for_varying_fAs.py --L 1000000 --fA_min 0.15 --fA_max 0.35 --fA_step 0.01 --num_simulations 10 --output_file results_by_varying_fA.txt
+    # Example usage: python run_for_varying_fAs.py --L 1000000 --fA_min 0.15 --fA_max 0.35 --fA_step 0.01 --num_simulations 10 --output_file results_by_varying_fA.csv
