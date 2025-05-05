@@ -139,7 +139,7 @@ def run_simulations_est_scores_and_record(args):
     ksizes = [21, 31, 41]
     ps, pd, d = args.rate, args.rate, args.rate
     L_values = [10000, 33333, 100000, 333333, 1000000]
-    fA = 0.3
+    fA = 0.4
     
     for L in L_values:
         for i in range(args.num_simulations):
@@ -151,7 +151,7 @@ def run_simulations_est_scores_and_record(args):
                 create_random_genome(fA, L, random_genome_filename, seed)
                 
                 # Create mutated genome
-                mutated_genome_filename = os.path.join(args.working_dir, f"random_genome_L_{L}_sim_{i}.fasta")
+                mutated_genome_filename = os.path.join(args.working_dir, f"random_mutated_L_{L}_sim_{i}.fasta")
                 create_mutated_genome(random_genome_filename, mutated_genome_filename, ps, pd, d, ksize, seed)
                 
                 # Compute mutation rates
