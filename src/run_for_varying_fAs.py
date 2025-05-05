@@ -146,25 +146,27 @@ def run_simulations_est_scores_and_record(args):
     
     for fA in [round(fA, 2) for fA in list(np.arange(args.fA_min, args.fA_max + args.fA_step, args.fA_step))]:
         for i in range(args.num_simulations):
-            # Create random genome
-            random_genome_filename = os.path.join(args.working_dir, f"random_genome_fA_{fA}_sim_{i}.fasta")
-            seed = i
-            create_random_genome(fA, args.L, random_genome_filename, seed)
-            
-            # Create mutated genome
-            mutated_genome_filename = os.path.join(args.working_dir, f"mutated_genome_fA_{fA}_sim_{i}.fasta")
-            create_mutated_genome(random_genome_filename, mutated_genome_filename, ps, pd, d, ksizes[0], seed)
-            
-            # Compute mutation rates
-            subst_rate, del_rate, ins_rate = compute_mutation_rates_by_true_values(random_genome_filename, mutated_genome_filename, ksizes[0])
-            if subst_rate is None or del_rate is None or ins_rate is None:
-                print(f"Error: Could not compute mutation rates for fA = {fA}, simulation {i}")
-                continue
-            
-            # Save results
-            with open(args.output_file, "a") as f:
-                f.write(f"{fA}\t{i}\t{subst_rate}\t{del_rate}\t{ins_rate}\n")
-            print(f"Simulation {i} for fA = {fA} completed. Rates: subst_rate = {subst_rate}, del_rate = {del_rate}, ins_rate = {ins_rate}")
+            for ksize in ksizes:
+                
+                # Create random genome
+                random_genome_filename = os.path.join(args.working_dir, f"random_genome_fA_{fA}_sim_{i}.fasta")
+                seed = i
+                create_random_genome(fA, args.L, random_genome_filename, seed)
+                
+                # Create mutated genome
+                mutated_genome_filename = os.path.join(args.working_dir, f"mutated_genome_fA_{fA}_sim_{i}.fasta")
+                create_mutated_genome(random_genome_filename, mutated_genome_filename, ps, pd, d, ksize, seed)
+                
+                # Compute mutation rates
+                subst_rate, del_rate, ins_rate = compute_mutation_rates_by_true_values(random_genome_filename, mutated_genome_filename, ksize)
+                if subst_rate is None or del_rate is None or ins_rate is None:
+                    print(f"Error: Could not compute mutation rates for fA = {fA}, simulation {i}")
+                    continue
+                
+                # Save results
+                with open(args.output_file, "a") as f:
+                    f.write(f"{fA}\t{i}\t{ksize}\t{subst_rate}\t{del_rate}\t{ins_rate}\n")
+                        
     print("All simulations completed.")
     return
 
@@ -178,7 +180,7 @@ def main():
     if os.path.exists(args.output_file):
         os.remove(args.output_file)
     with open(args.output_file, "w") as f:
-        f.write("fA\tsimulation\tsubst_rate\tdel_rate\tins_rate\n")
+        f.write("fA\tsimulation\tksize\tsubst_rate\tdel_rate\tins_rate\n")
     print(f"Output file created: {args.output_file}")
     
     # Run the simulations
