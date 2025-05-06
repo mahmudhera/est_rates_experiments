@@ -340,7 +340,7 @@ def run_simulations_est_scores_and_record(args):
             create_mutated_genome(random_genome_filename, mutated_genome_filename, ps, pd, d, ksize, seed)
             
             # Compute mutation rates
-            subst_rate, del_rate, ins_rate = compute_mutation_rates(random_genome_filename, mutated_genome_filename, ksize, num_threads=128)
+            subst_rate, del_rate, ins_rate = compute_mutation_rates_by_true_values(random_genome_filename, mutated_genome_filename, ksize)
             if subst_rate is None or del_rate is None or ins_rate is None:
                 print(f"Error: Could not compute mutation rates for fA = {fA}, simulation {i}")
                 continue
