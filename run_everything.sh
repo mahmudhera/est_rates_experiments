@@ -1,3 +1,7 @@
+# experiment by varying k
+python src/run_for_varying_k.py --num_simulations 20 --output_file results/estimated_rates_by_varying_ks_rates_set_to_0.05.csv --working_dir data_for_varying_k --rate 0.05
+python src/plot_results_varying_k.py --estimated_rates_file results/estimated_rates_by_varying_ks_rates_set_to_0.05.csv --output_filename plots/random_estimated_rates_varying_k_true_rates_set_to_0.05.pdf --true_rate 0.05
+
 # experiment by varying L
 python src/run_for_varying_L.py --num_simulations 20 --output_file results/estimated_rates_by_varying_Ls_rates_set_to_0.05.csv --working_dir data_for_varying_L --rate 0.05
 python src/run_for_varying_L.py --num_simulations 20 --output_file results/estimated_rates_by_varying_Ls_rates_set_to_0.01.csv --working_dir data_for_varying_L --rate 0.01
