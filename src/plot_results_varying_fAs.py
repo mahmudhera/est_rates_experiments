@@ -44,11 +44,6 @@ def plot(df, which_rate_to_plot, ax, true_rate):
     # plot boxplot
     sns.boxplot(x='fA', y=which_rate_to_plot, hue='ksize', data=df, ax=ax, linewidth=0.5, showfliers=False) 
     
-    # set zorder for artists and lines
-    for artist in ax.artists:
-        artist.set_zorder(3)
-    for line in ax.lines[1:]:
-        line.set_zorder(3)
     
     pretty_rate_names = {
         'subst_rate': '$p_s$',

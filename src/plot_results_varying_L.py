@@ -40,11 +40,6 @@ def plot(df, which_rate_to_plot, ax, true_rate):
     
     sns.boxplot(x='L', y=which_rate_to_plot, hue='ksize', data=df, ax=ax, linewidth=0.5, showfliers=False, width=0.5) 
     
-    for artist in ax.artists:
-        artist.set_zorder(3)
-    for line in ax.lines[1:]:
-        line.set_zorder(3)
-    
     pretty_rate_names = {
         'subst_rate': '$p_s$',
         'del_rate': '$p_d$',
