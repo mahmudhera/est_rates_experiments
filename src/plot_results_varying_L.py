@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# arguments: --estimated_rates_file, --output_filename
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Plot estimated rates from a file containing true rates and estimated rates.")
@@ -26,25 +25,21 @@ def parse_data(estimated_rates_filename):
     Read the estimated rates from the file and return them as a dataframe
     """
     # the column names should be:
-    # fA	simulation	ksize	subst_rate	del_rate	ins_rate
+    # L simulation	ksize	subst_rate	del_rate	ins_rate
     
     # parse using pandas    
     df = pd.read_csv(estimated_rates_filename, sep="\t")
-    
-    # remove if fA < 0.2 or > 0.3
-    df = df[(df['fA'] > 0.2) & (df['fA'] < 0.3)]
     
     return df
 
 
 def plot(df, which_rate_to_plot, ax, true_rate):
-    # plot true rate horizontal line
-    #ax.axhline(y=true_rate, color='grey', linestyle='-.', zorder=1, linewidth=0.8)
     
-    # plot boxplot
-    sns.boxplot(x='fA', y=which_rate_to_plot, hue='ksize', data=df, ax=ax, linewidth=0.5, showfliers=False) 
+    # plot horizontal line at 0.01
+    ax.axhline(y=true_rate, color='grey', linestyle='-.', zorder=1, linewidth=0.8)
     
-    # set zorder for artists and lines
+    sns.boxplot(x='L', y=which_rate_to_plot, hue='ksize', data=df, ax=ax, linewidth=0.5, showfliers=False, width=0.5) 
+    
     for artist in ax.artists:
         artist.set_zorder(3)
     for line in ax.lines[1:]:
@@ -57,25 +52,12 @@ def plot(df, which_rate_to_plot, ax, true_rate):
     }
     
     # x and y labels
-    ax.set_xlabel('fraction of As in $S$')
+    ax.set_xlabel('Length of the string $S$')
     ax.set_ylabel('Estimated ' + pretty_rate_names[which_rate_to_plot])
     ax.legend(title='$k$-mer size')
     
-    # set x ticks to 90 degrees, make sure two decimal points are shown
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
-    
-    # add a y tick at true_rate
-    if which_rate_to_plot == 'subst_rate':
-        y_ticks = ax.get_yticks() + [true_rate]
-        y_ticks = sorted(list(set(y_ticks)))
-        ax.set_yticks(y_ticks)
-    
-    
-    # set y limit to -1 to 1.0
-    #if which_rate_to_plot == 'subst_rate':
-        #ax.set_ylim(-0.1, 0.1)
-    
-    
+    # set x tick labels to 10K, 33K, 100K, 333K, 1M
+    ax.set_xticklabels(['10K', '33K', '100K', '333K', '1M'], rotation=45)
     
     
 def main():
