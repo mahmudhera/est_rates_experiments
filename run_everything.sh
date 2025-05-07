@@ -34,3 +34,4 @@ python src/plot_estimated_rates.py --estimated_rates_file results/est_rates_stap
 python src/plot_estimated_rates.py --estimated_rates_file results/est_rates_ndl_using_known.csv --output_filename plots/ndl_estimated_rates_using_known.pdf --method linear
 python src/plot_estimated_rates.py --estimated_rates_file results/est_rates_staph_using_known.csv --output_filename plots/staph_estimated_rates_using_known.pdf --method linear
 python src/plot_estimated_rates.py --estimated_rates_file results/est_rates_random_using_known.csv --output_filename plots/random_estimated_rates_using_known.pdf --method linear
+python src/plot_against_smm.py --estimated_rates_file results/est_rates_staph.csv --output_filename plots/staph_against_smm.pdf --method linear
