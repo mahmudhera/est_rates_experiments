@@ -124,23 +124,25 @@ def main():
     fig, axs = plt.subplots(2, 3, figsize=(8, 6))
     
     # plot the estimated rates for different fixed parameters
-    plot_estimated_rates(df, fixed_ps=0.01, fixed_pd=0.01, fixed_d=None, method_name=args.method, ax=axs[0][2])
-    axs[0][0].set_title("$p_s = 0.01, p_d = 0.01$")
+    plot_estimated_rates(df, fixed_ps=None, fixed_pd=0.01, fixed_d=0.01, method_name=args.method, ax=axs[0][0])
+    axs[0][0].set_title("$p_d = 0.01, d = 0.01$")
     
     plot_estimated_rates(df, fixed_ps=0.01, fixed_pd=None, fixed_d=0.01, method_name=args.method, ax=axs[0][1])
     axs[0][1].set_title("$p_s = 0.01, d = 0.01$")
     
-    plot_estimated_rates(df, fixed_ps=None, fixed_pd=0.01, fixed_d=0.01, method_name=args.method, ax=axs[0][0])
-    axs[0][2].set_title("$p_d = 0.01, d = 0.01$")
+    plot_estimated_rates(df, fixed_ps=0.01, fixed_pd=0.01, fixed_d=None, method_name=args.method, ax=axs[0][2])
+    axs[0][2].set_title("$p_s = 0.01, p_d = 0.01$")
     
-    plot_estimated_rates(df, fixed_ps=0.05, fixed_pd=0.05, fixed_d=None, method_name=args.method, ax=axs[1][2])
-    axs[1][0].set_title("$p_s = 0.05, p_d = 0.05$")
+    plot_estimated_rates(df, fixed_ps=None, fixed_pd=0.05, fixed_d=0.05, method_name=args.method, ax=axs[1][0])
+    axs[1][0].set_title("$p_d = 0.05, d = 0.05$")
     
     plot_estimated_rates(df, fixed_ps=0.05, fixed_pd=None, fixed_d=0.05, method_name=args.method, ax=axs[1][1])
     axs[1][1].set_title("$p_s = 0.05, d = 0.05$")
     
-    plot_estimated_rates(df, fixed_ps=None, fixed_pd=0.05, fixed_d=0.05, method_name=args.method, ax=axs[1][0])
-    axs[1][2].set_title("$p_d = 0.05, d = 0.05$")
+    plot_estimated_rates(df, fixed_ps=0.05, fixed_pd=0.05, fixed_d=None, method_name=args.method, ax=axs[1][2])
+    axs[1][2].set_title("$p_s = 0.05, p_d = 0.05$")
+    
+    
     
     # tight layout to avoid overlap
     plt.tight_layout()

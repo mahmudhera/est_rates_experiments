@@ -52,7 +52,7 @@ def plot(df, which_rate_to_plot, ax, true_rate):
     }
     
     # x and y labels
-    ax.set_xlabel('fraction of As in $S$')
+    ax.set_xlabel('fraction of \'A\'s in $S$')
     ax.set_ylabel('Estimated ' + pretty_rate_names[which_rate_to_plot])
     ax.legend(title='$k$-mer size')
     
